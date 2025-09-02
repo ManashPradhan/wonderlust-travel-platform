@@ -114,8 +114,10 @@ passport.deserializeUser(User.deserializeUser());
 
 // Global middleware for flash messages and user
 app.use((req, res, next) => {
-    // Debug authentication state (always show for debugging)
-    console.log(`🔍 [${req.method}] ${req.url} - Auth: ${req.isAuthenticated()} - User: ${req.user ? req.user.username : 'None'} - Session: ${req.sessionID}`);
+    // Debug authentication state (only in development)
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(`🔍 [${req.method}] ${req.url} - Auth: ${req.isAuthenticated()} - User: ${req.user ? req.user.username : 'None'} - Session: ${req.sessionID}`);
+    }
     
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
