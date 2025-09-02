@@ -109,15 +109,29 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
+// Manual serialization/deserialization for better debugging
+passport.serializeUser((user, done) => {
+    console.log('🔐 Serializing user:', user._id);
+    done(null, user._id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        console.log('🔓 Deserializing user ID:', id);
+        const user = await User.findById(id);
+        console.log('🔓 Found user:', user ? user.username : 'null');
+        done(null, user);
+    } catch (error) {
+        console.log('🔓 Deserialization error:', error);
+        done(error, null);
+    }
+});
 
 // Global middleware for flash messages and user
 app.use((req, res, next) => {
-    // Debug authentication state (only in development)
-    if (process.env.NODE_ENV !== 'production') {
-        console.log(`🔍 [${req.method}] ${req.url} - Auth: ${req.isAuthenticated()} - User: ${req.user ? req.user.username : 'None'} - Session: ${req.sessionID}`);
-    }
+    // Debug authentication state (always show for debugging this issue)
+    console.log(`🔍 [${req.method}] ${req.url} - Auth: ${req.isAuthenticated()} - User: ${req.user ? req.user.username : 'None'} - Session: ${req.sessionID}`);
     
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
