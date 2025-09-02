@@ -58,7 +58,6 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
     maxAge: 7 * 24 * 60 * 60 * 1000,    // 7 days
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production', // HTTPS only in production
@@ -88,6 +87,18 @@ sessionStore.on('error', (error) => {
   console.error('❌ Session store error:', error);
 });
 
+sessionStore.on('create', (sessionId) => {
+  console.log('📝 Session created:', sessionId);
+});
+
+sessionStore.on('update', (sessionId) => {
+  console.log('🔄 Session updated:', sessionId);
+});
+
+sessionStore.on('touch', (sessionId) => {
+  console.log('👆 Session touched:', sessionId);
+});
+
 // Update session options to use the configured store
 sessionOptions.store = sessionStore;
 
@@ -103,6 +114,11 @@ passport.deserializeUser(User.deserializeUser());
 
 // Global middleware for flash messages and user
 app.use((req, res, next) => {
+    // Debug authentication state
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(`🔍 [${req.method}] ${req.url} - Auth: ${req.isAuthenticated()} - User: ${req.user ? req.user.username : 'None'} - Session: ${req.sessionID}`);
+    }
+    
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     res.locals.currentUser = req.user;

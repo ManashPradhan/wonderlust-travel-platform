@@ -33,7 +33,14 @@ module.exports.renderLoginForm = (req, res) => {
 module.exports.login = (req, res) => {
     req.flash('success', 'Welcome back to WonderLust!');
     const redirectUrl = res.locals.redirectUrl || '/listings';
-    res.redirect(redirectUrl);
+    
+    // Ensure session is saved before redirect
+    req.session.save((err) => {
+        if (err) {
+            console.error('Session save error:', err);
+        }
+        res.redirect(redirectUrl);
+    });
 };
 
 // Handle User Logout
