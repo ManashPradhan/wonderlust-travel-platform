@@ -53,6 +53,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.json());
 
+app.set('trust proxy', 1); // Trust first proxy (required for Render/Heroku)
+
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
