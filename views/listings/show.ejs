@@ -154,6 +154,7 @@
             </div>
 
             <!-- Action Buttons for Owner -->
+            <% if (currentUser && listing.owner && listing.owner._id.equals(currentUser._id)) { %>
             <div class="d-flex gap-2 mt-4 pt-3 border-top">
               <a href="/listings/<%= listing._id %>/edit" class="btn btn-success">
                 <i class="bi bi-pencil-square"></i> Edit Listing
@@ -164,6 +165,7 @@
                 </button>
               </form>
             </div>
+            <% } %>
           </div>
         </div>
 
@@ -456,7 +458,7 @@
                           <%= review.createdAt ? new Date(review.createdAt).toLocaleDateString() : 'Recently' %>
                         </small>
                       </div>
-                      <% if (review._id) { %>
+                      <% if (currentUser && review.author && review.author._id.equals(currentUser._id)) { %>
                         <div class="dropdown">
                           <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown">
                             <i class="bi bi-three-dots-vertical"></i>

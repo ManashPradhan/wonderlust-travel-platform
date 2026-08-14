@@ -197,16 +197,18 @@
                   <a href="/listings/<%= listing._id %>" class="btn btn-primary btn-sm flex-fill">
                     <i class="bi bi-eye"></i> View Details
                   </a>
-                  <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-success btn-sm">
-                    <i class="bi bi-pencil"></i>
-                  </a>
-                  <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
-                    <button class="btn btn-outline-danger btn-sm" 
-                            onclick="return confirm('Are you sure?')"
-                            type="submit">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </form>
+                  <% if (currentUser && listing.owner && (listing.owner._id ? listing.owner._id.equals(currentUser._id) : listing.owner.equals(currentUser._id))) { %>
+                    <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-success btn-sm">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                    <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
+                      <button class="btn btn-outline-danger btn-sm" 
+                              onclick="return confirm('Are you sure?')"
+                              type="submit">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </form>
+                  <% } %>
                 </div>
               </div>
             </div>
@@ -520,7 +522,7 @@ window.applyFilters = applyFilters;
   right: 1rem;
   transform: translateY(-50%);
   padding: 0.5rem;
-  background: rgba(0,0,0,0.1);
+  background-color: rgba(0,0,0,0.1);
   border-radius: 50%;
   opacity: 0.7;
   transition: all 0.2s ease;
@@ -528,7 +530,7 @@ window.applyFilters = applyFilters;
 
 .alert-dismissible .btn-close:hover {
   opacity: 1;
-  background: rgba(0,0,0,0.2);
+  background-color: rgba(0,0,0,0.2);
   transform: translateY(-50%) scale(1.1);
 }
 
