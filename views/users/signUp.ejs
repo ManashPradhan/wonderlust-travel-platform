@@ -114,12 +114,17 @@
                 <label for="confirmPassword" class="form-label fw-semibold">
                   <i class="bi bi-lock-fill text-danger me-2"></i>Confirm Password
                 </label>
-                <input type="password" 
-                       class="form-control form-control-lg" 
-                       id="confirmPassword" 
-                       name="confirmPassword" 
-                       placeholder="Confirm your password"
-                       required>
+                <div class="input-group">
+                  <input type="password" 
+                         class="form-control form-control-lg" 
+                         id="confirmPassword" 
+                         name="confirmPassword" 
+                         placeholder="Confirm your password"
+                         required>
+                  <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+                    <i class="bi bi-eye" id="toggleConfirmIcon"></i>
+                  </button>
+                </div>
                 <div class="invalid-feedback" id="confirmPasswordFeedback">
                   Passwords do not match.
                 </div>
@@ -301,23 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // Safe password toggle functionality
-    const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
-    const toggleIcon = document.getElementById('toggleIcon');
-
-    if (togglePassword && passwordInput && toggleIcon) {
-      togglePassword.addEventListener('click', function() {
-        try {
-          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-          passwordInput.setAttribute('type', type);
-          toggleIcon.classList.toggle('bi-eye');
-          toggleIcon.classList.toggle('bi-eye-slash');
-        } catch (error) {
-          console.error('Password toggle error:', error);
-        }
-      });
-    }
 
     // Password strength checker
     const strengthFill = document.getElementById('strengthFill');

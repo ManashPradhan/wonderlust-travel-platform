@@ -483,10 +483,15 @@ function initializeFormValidation() {
 
 // Password toggle functionality
 function initializePasswordToggle() {
-    const toggleButtons = document.querySelectorAll('[id="togglePassword"]');
+    const toggleButtons = document.querySelectorAll('.password-toggle-btn, [id^="togglePassword"], [id^="toggleConfirmPassword"], .toggle-password');
     toggleButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const passwordInput = this.parentElement.querySelector('input[type="password"], input[type="text"]');
+        if (button.dataset.toggleBound === 'true') return;
+        button.dataset.toggleBound = 'true';
+
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const parent = this.closest('.input-group') || this.parentElement;
+            const passwordInput = parent.querySelector('input');
             const icon = this.querySelector('i');
             
             if (passwordInput && icon) {

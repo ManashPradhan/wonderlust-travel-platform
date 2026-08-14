@@ -102,24 +102,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   try {
-    // Password toggle functionality
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-    const toggleIcon = document.getElementById('toggleIcon');
-
-    if (togglePassword && passwordInput && toggleIcon) {
-      togglePassword.addEventListener('click', function() {
-        try {
-          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-          passwordInput.setAttribute('type', type);
-          toggleIcon.classList.toggle('bi-eye');
-          toggleIcon.classList.toggle('bi-eye-slash');
-        } catch (error) {
-          console.error('Password toggle error:', error);
-        }
-      });
-    }
-
     // Form submission handling
     const form = document.getElementById('loginForm');
     const submitBtn = document.getElementById('submitBtn');
