@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const reviewController = require('../controllers/reviewController');
-const { validateReview, isLoggedIn, isReviewAuthor } = require('../middleware');
+const { validateReview, isLoggedIn, isReviewAuthor } = require('../middlewares');
 
 // Reviews Routes - Grouped using router.route()
 router.route('/')

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const listingController = require('../controllers/listingController');
-const { isLoggedIn, isOwner, validateListing, upload } = require('../middleware');
+const { isLoggedIn, isOwner, validateListing, upload } = require('../middlewares');
 
 // Listings Collection Routes - Grouped using router.route()
 router.route('/')

@@ -1,9 +1,9 @@
-const ExpressError = require('./utils/ExpressError');
-const { listingSchema, reviewSchema } = require('./schema');
-const Listing = require('./models/listing');
-const Review = require('./models/review');
+const ExpressError = require('../utils/ExpressError');
+const { listingSchema, reviewSchema } = require('../schema');
+const Listing = require('../models/listing');
+const Review = require('../models/review');
 const multer = require('multer');
-const { storage } = require('./config/cloudinary');
+const { storage } = require('../config/cloudinary');
 
 // Configure multer with Cloudinary storage
 const upload = multer({
@@ -108,21 +108,6 @@ module.exports.isGuest = (req, res, next) => {
     }
     next();
 };
-
-// Admin check middleware (for future use)
-module.exports.isAdmin = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        req.flash('error', 'You must be logged in.');
-        return res.redirect('/login');
-    }
-    
-    if (!req.user.isAdmin) {
-        req.flash('error', 'You do not have admin privileges.');
-        return res.redirect('/listings');
-    }
-    next();
-};
-
 
 // Admin check middleware (for future use)
 module.exports.isAdmin = (req, res, next) => {
